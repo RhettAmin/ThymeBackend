@@ -18,16 +18,16 @@ class EmbeddedMongoConfig {
 
     @Value("\${db.name}")
     private val databaseName: String? = null
-    @Bean
-    @Throws(Exception::class)
-    fun mongoDbFactory(): MongoDbFactory {
-        println("database url: $databaseURL db name: $databaseName")
-        return SimpleMongoDbFactory(MongoClient(databaseURL), databaseName)
-    }
+//    @Bean
+//    @Throws(Exception::class)
+//    fun mongoDbFactory(): MongoDbFactory {
+//        println("database url: $databaseURL db name: $databaseName")
+//        return SimpleMongoDbFactory(MongoClient(databaseURL), databaseName)
+//    }
 
-    @Bean
-    @Throws(Exception::class)
-    fun mongoTemplate(): MongoTemplate {
-        return MongoTemplate(mongoDbFactory())
-    }
+//    @Bean
+//    @Throws(Exception::class)
+//    fun mongoTemplate(): MongoTemplate {
+//        return MongoTemplate(mongoDbFactory())
+//    }
 }

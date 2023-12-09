@@ -1,8 +1,5 @@
-package com.rhett.thymebackend.service
+package com.rhett.thymebackend.recipe
 
-import com.rhett.thymebackend.datasource.RecipeRepository
-import com.rhett.thymebackend.models.NutritionFacts
-import com.rhett.thymebackend.models.Recipe
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.bson.types.ObjectId
@@ -21,7 +18,7 @@ class RecipeServiceTest (
 
     @BeforeAll
     fun setup() {
-        val recipe = Recipe(id = ObjectId.get(), name="test", notes="test",
+        val recipe = Recipe(id = ObjectId.get(), name="test", description="test",
             nutritionFacts = NutritionFacts(5f, 5.0f, 5f))
         recipeRepository.save(recipe)
     }

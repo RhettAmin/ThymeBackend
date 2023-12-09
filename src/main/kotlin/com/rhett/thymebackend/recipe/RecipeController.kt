@@ -1,10 +1,6 @@
-package com.rhett.thymebackend.controllers
+package com.rhett.thymebackend.recipe
 
-import com.rhett.thymebackend.models.Recipe
-import com.rhett.thymebackend.service.RecipeService
-import org.springframework.data.mongodb.repository.Query
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -18,37 +14,39 @@ class RecipeController (
 
     // ============================================================================
 
-    // REST MAPPINGS
-//    @GetMapping
-//    fun getRecipes() : List<Recipe> {
-//        return service.getRecipes()
-//    }
 
+    /**
+     * Get Recipe
+     *   Function that returns a list of recipe objects.
+     *   Passing in an id or name will return that recipe or nothing.
+     * Input:
+     *   id - ObjectId of the object, auto-created by Mongo
+     *   name - Name of the recipe you are looking for
+     * Returns:
+     *   a list of recipe objects or a single recipe object
+     */
+    @CrossOrigin
     @GetMapping
     fun getRecipe(@RequestParam(required = false) id: String?, @RequestParam(required = false) name: String?): List<Recipe?> {
-        return service.getRecipeCore(id, name) ?: throw NoSuchElementException("Recipe with id: $id doesn't exist")
+        return service.getRecipeCore(id, name)
     }
-//
-//    @GetMapping
-//    fun getRecipeByName(@RequestParam name: String): Recipe {
-//        return service.getRecipeByName(name) ?:
-//            throw NoSuchElementException("Recipe with name: $name doesn't exist")
-//    }
 
-
-    @PostMapping
+    @CrossOrigin
+    @PostMapping(consumes = ["application/json"])
     @ResponseStatus(HttpStatus.CREATED)
     fun addNewRecipe(@RequestBody recipe: Recipe): Recipe {
-       return service.addRecipe(recipe) ?:
+        return service.addRecipe(recipe) ?:
             throw IllegalArgumentException("recipe with the name: ${recipe.name} already exists")
     }
 
-   @PatchMapping
-   fun updateRecipe(@RequestBody updatedRecipe: Recipe): Recipe? {
+    @CrossOrigin
+    @PatchMapping
+    fun updateRecipe(@RequestBody updatedRecipe: Recipe): Recipe? {
        return service.updateRecipe(updatedRecipe) ?:
             throw IllegalArgumentException("recipe with the name: ${updatedRecipe.name} doesn't exist")
-   }
+    }
 
+    @CrossOrigin
     @DeleteMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteRecipe(@RequestParam id: String) {

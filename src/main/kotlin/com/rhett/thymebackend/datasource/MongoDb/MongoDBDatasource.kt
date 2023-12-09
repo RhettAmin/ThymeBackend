@@ -1,6 +1,6 @@
 package com.rhett.thymebackend.datasource.MongoDb
 
-import com.rhett.thymebackend.models.Recipe
+import com.rhett.thymebackend.recipe.Recipe
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 

@@ -3,11 +3,15 @@ package com.rhett.thymebackend.extensions
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import java.util.*
+import kotlin.String
+import kotlin.plus
 
-@ControllerAdvice
+
+@RestControllerAdvice
 @Component
 class ThymeExceptionHandler: ResponseEntityExceptionHandler() {
 
@@ -18,7 +22,7 @@ class ThymeExceptionHandler: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleBadRequestError(e: IllegalArgumentException): ResponseEntity<String> {
-        return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        return ResponseEntity(e.message + "=-=" + e.stackTrace, HttpStatus.BAD_REQUEST)
     }
 
 }

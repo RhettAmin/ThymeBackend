@@ -1,4 +1,4 @@
-package com.rhett.thymebackend.controllers
+package com.rhett.thymebackend.recipe
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
