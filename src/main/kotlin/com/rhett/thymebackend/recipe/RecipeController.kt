@@ -48,7 +48,7 @@ class RecipeController (
 
     @CrossOrigin
     @DeleteMapping()
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     fun deleteRecipe(@RequestParam id: String) {
         service.deleteRecipe(id)
     }

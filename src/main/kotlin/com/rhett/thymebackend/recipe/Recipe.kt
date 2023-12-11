@@ -27,7 +27,7 @@ data class Recipe(
     @Id
     @GeneratedValue
     @Contextual
-    @JsonSerialize(using= ToStringSerializer::class)
+    @JsonSerialize(using = ToStringSerializer::class)
     val id: ObjectId?,
     @NotNull
     val name: String? = "",
@@ -56,8 +56,9 @@ data class Instruction (
 
 @Serializable
 data class NutritionFacts (
-    val protein: Float,
-    val carbs: Float,
-    val fats: Float
+    val calories: Int,
+    val protein: Int,
+    val carbs: Int,
+    val fats: Int
 )
 
