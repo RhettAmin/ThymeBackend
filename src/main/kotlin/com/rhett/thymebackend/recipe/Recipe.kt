@@ -34,24 +34,36 @@ data class Recipe(
     val description: String? = "",
     val tags: List<String>? = emptyList(),
     @Contextual
-    val image: UUID? = UUID.fromString("00000000-0000-0000-0000-000000000000"),
-    val ingredients: List<Ingredient>? = emptyList(),
+    val image: String,
+    @Field("ingredient_section")
+    val ingredientSection: List<IngredientSection>? = emptyList(),
     val servings: String? = "",
-    val instructions: List<Instruction>? = emptyList(),
+    @Field("time_to_plate")
+    val timeToPlate: Int = 0,
+    @Field("instruction_section")
+    val instructionSection: List<InstructionSection>? = emptyList(),
     @Field("nutrition_facts")
     val nutritionFacts: NutritionFacts?
 )
 
 @Serializable
+data class IngredientSection (
+    @Field("section_name")
+    val sectionName: String?,
+    val ingredients: List<Ingredient>
+)
+@Serializable
 data class Ingredient (
     val name: String,
     val quantity: Float,
-    val measurement: String
+    val measurement: String?
 )
 
 @Serializable
-data class Instruction (
-    val step: String
+data class InstructionSection (
+    @Field("section_name")
+    val sectionName: String?,
+    val steps: List<String>
 )
 
 @Serializable

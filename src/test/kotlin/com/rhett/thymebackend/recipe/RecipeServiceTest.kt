@@ -18,9 +18,9 @@ class RecipeServiceTest (
 
     @BeforeAll
     fun setup() {
-        val recipe = Recipe(id = ObjectId.get(), name="test", description="test",
-            nutritionFacts = NutritionFacts(5f, 5.0f, 5f))
-        recipeRepository.save(recipe)
+//        val recipe = Recipe(id = ObjectId.get(), name="test", description="test",
+//            nutritionFacts = NutritionFacts(5f, 5.0f, 5f))
+//        recipeRepository.save(recipe)
     }
 
     @AfterAll

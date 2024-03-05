@@ -59,10 +59,10 @@ class RecipeService(
             name = recipe.name ?: currentRecipe.name,
             description = recipe.description ?: currentRecipe.description,
             tags = recipe.tags ?: currentRecipe.tags,
-            image = recipe.image ?: currentRecipe.image,
-            ingredients = recipe.ingredients ?: currentRecipe.ingredients,
+            image = recipe.image,
+            ingredientSection = recipe.ingredientSection ?: currentRecipe.ingredientSection,
             servings = recipe.servings ?: currentRecipe.servings,
-            instructions = recipe.instructions ?: currentRecipe.instructions,
+            instructionSection = recipe.instructionSection ?: currentRecipe.instructionSection,
             nutritionFacts = recipe.nutritionFacts ?: currentRecipe.nutritionFacts,
         )
         return recipeRepo.save(updatedRecipe)

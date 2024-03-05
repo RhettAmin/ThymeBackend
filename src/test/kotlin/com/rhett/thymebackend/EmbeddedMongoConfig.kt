@@ -1,17 +1,14 @@
 package com.rhett.thymebackend
 
-import com.mongodb.client.MongoClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
-import org.springframework.data.mongodb.core.MongoTemplate
 
 
-@Configuration
-@EnableAutoConfiguration
-@PropertySource("application-test.properties")
+//@Configuration
+//@EnableAutoConfiguration
+//@PropertySource("application.properties")
 class EmbeddedMongoConfig {
     @Value("\${db.connectionURL}")
     private val databaseURL: String? = null

@@ -8,13 +8,6 @@ import org.springframework.web.bind.annotation.*
 class RecipeController (
     private val service: RecipeService
 ){
-
-    // Error Handlers
-
-
-    // ============================================================================
-
-
     /**
      * Get Recipe
      *   Function that returns a list of recipe objects.
@@ -35,6 +28,7 @@ class RecipeController (
     @PostMapping(consumes = ["application/json"])
     @ResponseStatus(HttpStatus.CREATED)
     fun addNewRecipe(@RequestBody recipe: Recipe): Recipe {
+        println(recipe)
         return service.addRecipe(recipe) ?:
             throw IllegalArgumentException("recipe with the name: ${recipe.name} already exists")
     }
