@@ -46,7 +46,7 @@ class RecipeService(
 
     fun addRecipe(recipe: Recipe): Recipe? {
         // First check if recipe with the name already exists
-        if (recipeRepo.existsById(recipe.id.toString())) {
+        if (recipeRepo.existsById(recipe.id)) {
             return null
         }
         return recipeRepo.save(recipe)

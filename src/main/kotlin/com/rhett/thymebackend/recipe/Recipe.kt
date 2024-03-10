@@ -25,10 +25,8 @@ import java.util.Collections.emptyList
 @Document(collection = "Recipes")
 data class Recipe(
     @Id
-    @GeneratedValue
-    @Contextual
     @JsonSerialize(using = ToStringSerializer::class)
-    val id: ObjectId?,
+    val id: String,
     @NotNull
     val name: String? = "",
     val description: String? = "",
