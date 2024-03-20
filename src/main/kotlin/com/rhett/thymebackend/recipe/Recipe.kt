@@ -28,20 +28,29 @@ data class Recipe(
     @JsonSerialize(using = ToStringSerializer::class)
     val id: String,
     @NotNull
-    val name: String? = "",
-    val description: String? = "",
-    val tags: List<String>? = emptyList(),
+    val name: String = "",
+    val description: String = "",
+    val tags: List<String> = emptyList(),
     @Contextual
     val image: String,
     @Field("ingredient_section")
-    val ingredientSection: List<IngredientSection>? = emptyList(),
-    val servings: String? = "",
+    val ingredientSection: List<IngredientSection> = emptyList(),
+    val serving: Serving,
     @Field("time_to_plate")
     val timeToPlate: Int = 0,
     @Field("instruction_section")
-    val instructionSection: List<InstructionSection>? = emptyList(),
+    val instructionSection: List<InstructionSection> = emptyList(),
     @Field("nutrition_facts")
-    val nutritionFacts: NutritionFacts?
+    val nutritionFacts: NutritionFacts
+)
+
+@Serializable
+data class Serving (
+    @Field("total_servings")
+    val totalServings: Int,
+    @Field("serving_size")
+    val servingSize: Int,
+    val amount: String
 )
 
 @Serializable
@@ -68,7 +77,18 @@ data class InstructionSection (
 data class NutritionFacts (
     val calories: Int,
     val protein: Int,
-    val carbs: Int,
-    val fats: Int
+    val carbohydrate: Int,
+    val fat: Int,
+    @Field("saturated_fat")
+    val saturatedFat: Int,
+    @Field("trans_fat")
+    val transFat: Int,
+    val fibre: Int,
+    val sugars: Int,
+    val cholesterol: Int,
+    val sodium: Int,
+    val vitaminD: Int,
+    val iron: Int,
+    val potassium: Int,
+    val calcium: Int
 )
-

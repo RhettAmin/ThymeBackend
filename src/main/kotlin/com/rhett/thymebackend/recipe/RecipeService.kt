@@ -28,14 +28,14 @@ class RecipeService(
         return recipeRepo.findAll()
     }
 
-    fun getRecipeById(id: String): Recipe {
+    fun getRecipeById(id: String): Recipe? {
         return recipeRepo.findById(id).getOrNull()
-            ?: throw NoSuchElementException("recipe with id: $id doesn't exist")
+
     }
 
-    fun getRecipeByName(name: String): Recipe {
+    fun getRecipeByName(name: String): Recipe? {
         return recipeRepo.findItemByName(name).getOrNull()
-            ?: throw NoSuchElementException("recipe with name: $name doesn't exist")
+
     }
 
     /**
@@ -53,17 +53,17 @@ class RecipeService(
     }
 
     fun updateRecipe(recipe: Recipe): Recipe? {
-        val currentRecipe = getRecipeById(recipe.id.toString()) ?: return null
+        val currentRecipe = getRecipeById(recipe.id) ?: return null
         val updatedRecipe = recipe.copy(
             id = currentRecipe.id,
             name = recipe.name ?: currentRecipe.name,
             description = recipe.description ?: currentRecipe.description,
             tags = recipe.tags ?: currentRecipe.tags,
             image = recipe.image,
-            ingredientSection = recipe.ingredientSection ?: currentRecipe.ingredientSection,
-            servings = recipe.servings ?: currentRecipe.servings,
-            instructionSection = recipe.instructionSection ?: currentRecipe.instructionSection,
-            nutritionFacts = recipe.nutritionFacts ?: currentRecipe.nutritionFacts,
+            ingredientSection = recipe.ingredientSection,
+            serving = recipe.serving,
+            instructionSection = recipe.instructionSection,
+            nutritionFacts = recipe.nutritionFacts,
         )
         return recipeRepo.save(updatedRecipe)
     }

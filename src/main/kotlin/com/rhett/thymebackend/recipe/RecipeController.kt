@@ -20,14 +20,18 @@ class RecipeController (
      */
     @CrossOrigin
     @GetMapping
-    fun getRecipe(@RequestParam(required = false) id: String?, @RequestParam(required = false) name: String?): List<Recipe?> {
+    fun getRecipe(@RequestParam(required = false) id: String?,
+                  @RequestParam(required = false) name: String?)
+    : List<Recipe?> {
         return service.getRecipeCore(id, name)
     }
 
     @CrossOrigin
     @PostMapping(consumes = ["application/json"])
     @ResponseStatus(HttpStatus.CREATED)
-    fun addNewRecipe(@RequestBody recipe: Recipe): Recipe {
+    fun addNewRecipe(
+        @RequestBody recipe: Recipe)
+    : Recipe {
         println(recipe)
         return service.addRecipe(recipe) ?:
             throw IllegalArgumentException("recipe with the name: ${recipe.name} already exists")
@@ -35,7 +39,9 @@ class RecipeController (
 
     @CrossOrigin
     @PatchMapping
-    fun updateRecipe(@RequestBody updatedRecipe: Recipe): Recipe? {
+    fun updateRecipe(
+        @RequestBody updatedRecipe: Recipe)
+    : Recipe? {
        return service.updateRecipe(updatedRecipe) ?:
             throw IllegalArgumentException("recipe with the name: ${updatedRecipe.name} doesn't exist")
     }
@@ -43,7 +49,9 @@ class RecipeController (
     @CrossOrigin
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    fun deleteRecipe(@RequestParam id: String) {
+    fun deleteRecipe(
+        @RequestParam id: String)
+    {
         service.deleteRecipe(id)
     }
 }
