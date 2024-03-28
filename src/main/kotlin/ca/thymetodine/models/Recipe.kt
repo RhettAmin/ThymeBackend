@@ -11,7 +11,7 @@ data class Recipe(
     val name: String = "",
     val description: String = "",
     val tags: List<String> = Collections.emptyList(),
-    val image: String,
+    val images: String,
     @SerialName("ingredient_section")
     val ingredientSection: List<IngredientSection> = Collections.emptyList(),
     val serving: Serving,
@@ -67,6 +67,7 @@ data class NutritionFacts (
     val sugars: Int,
     val cholesterol: Int,
     val sodium: Int,
+    @SerialName("vitamin_d")
     val vitaminD: Int,
     val iron: Int,
     val potassium: Int,

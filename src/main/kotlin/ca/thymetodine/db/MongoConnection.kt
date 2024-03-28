@@ -11,19 +11,20 @@ import io.realm.kotlin.internal.platform.runBlocking
 import kotlinx.coroutines.flow.toList
 import org.mongodb.kbson.ObjectId
 
+
+fun Application.configureMongoConnection() {
+    MongoConnection.uri = environment.config.property("mongo.uri").getString()
+    MongoConnection.mongoClient = MongoClient.create(MongoConnection.uri)
+    MongoConnection.foodDb = MongoConnection.mongoClient.getDatabase(environment.config.property("mongo.database").getString())
+    MongoConnection.recipeCollection = MongoConnection.foodDb.getCollection(environment.config.property("mongo.collection").getString())
+}
+
 object MongoConnection {
 
     lateinit var uri: String
     lateinit var mongoClient: MongoClient
     lateinit var foodDb: MongoDatabase
     lateinit var recipeCollection: MongoCollection<Recipe>
-
-    fun Application.initMongoConfig() {
-        uri = environment.config.property("mongo.uri").getString()
-        mongoClient = MongoClient.create(uri)
-        foodDb = mongoClient.getDatabase(environment.config.property("mongo.database").getString())
-        recipeCollection = foodDb.getCollection(environment.config.property("mongo.collection").getString())
-    }
 
     fun closeConnection() = mongoClient.close()
 

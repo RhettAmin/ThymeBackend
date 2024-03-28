@@ -5,38 +5,35 @@ import ca.thymetodine.db.MongoConnection.getRecipes
 import ca.thymetodine.db.MongoConnection.postRecipe
 import ca.thymetodine.db.MongoConnection.replaceRecipe
 import ca.thymetodine.models.Recipe
+import ca.thymetodine.models.Response
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 fun Route.recipeRouting() {
     route("/recipes") {
         get {
+            println("QueryParam: ${call.request.queryParameters["recipeId"]}")
             val recipeList = getRecipes(call.request.queryParameters["recipeId"])
-           call.respond(recipeList)
+            val statusCode = if (recipeList.isEmpty()) { HttpStatusCode.NotFound } else { HttpStatusCode.OK }
+            call.respond(HttpStatusCode.OK, Response(null, recipeList, statusCode.value.toString()))
         }
         post {
             // Grab Request Body and decode
             val newRecipe = Json.decodeFromString<Recipe>(call.receive())
 
-            // Check if recipeID exists in the DB
-            val recipeDB = getRecipes(newRecipe.recipeId)
-            if (recipeDB.isEmpty()) {
-                // If recipe doesn't exist then we'll add it
-                val response = postRecipe(newRecipe)
-                if (response != null) {
-                    call.respondText(response, status = HttpStatusCode.Created)
-                } else {
-                    call.respondText("Recipe Creation encountered an issue", status = HttpStatusCode.BadRequest)
-                }
+            val response = postRecipe(newRecipe)
+            if (response != null) {
+                call.respond(Response(response, null, HttpStatusCode.Created.value.toString()))
             } else {
-                // IF recipe does exist then we return back a message of it's existence already
-                call.respondText { "recipe with that ID already exists!" }
+                call.respond(
+                    Response("Recipe Creation encountered an issue",
+                        null, HttpStatusCode.BadRequest.value.toString()))
             }
+
         }
         patch {
             /*
@@ -49,14 +46,17 @@ fun Route.recipeRouting() {
             // Call update Call, if the recipe_id is not found it will return a 404 error
             val response = replaceRecipe(updatedRecipe)
             if (response != null) {
-                call.respondText(response, status = HttpStatusCode.OK)
+                call.respond(
+                    Response(response, null, HttpStatusCode.OK.value.toString()))
             } else {
-                call.respondText("Recipe Creation encountered an issue", status = HttpStatusCode.NotFound)
+                call.respond(
+                    Response("Recipe Creation encountered an issue",
+                        null, HttpStatusCode.BadRequest.value.toString()))
             }
         }
         delete {
             call.request.queryParameters["recipeId"]?.let { it1 -> deleteRecipe(it1) }
-            call.respondText("Recipe successfully deleted", status = HttpStatusCode.OK)
+            call.respond(Response("Recipe successfully deleted", null, HttpStatusCode.OK.value.toString()))
         }
     }
 
