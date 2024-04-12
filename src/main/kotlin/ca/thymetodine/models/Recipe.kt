@@ -1,5 +1,7 @@
 package ca.thymetodine.models
 
+import kotlinx.datetime.*
+import kotlinx.datetime.TimeZone
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
@@ -10,6 +12,10 @@ data class Recipe(
     val recipeId: String,
     val name: String = "",
     val description: String = "",
+    @SerialName("created_date")
+    val createdDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+    @SerialName("updated_date")
+    var updatedDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
     val tags: List<String> = Collections.emptyList(),
     val images: String,
     @SerialName("ingredient_section")

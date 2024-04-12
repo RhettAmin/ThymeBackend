@@ -41,6 +41,5 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.0.0")
     implementation("org.mongodb:bson-kotlinx:5.0.0")
-    implementation("io.realm.kotlin:library-base:1.11.0")
-    implementation("io.realm.kotlin:library-sync:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
 }

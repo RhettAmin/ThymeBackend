@@ -11,6 +11,9 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.todayIn
 import kotlinx.serialization.json.Json
 
 fun Route.recipeRouting() {
@@ -42,7 +45,7 @@ fun Route.recipeRouting() {
              */
             // Grab Request Body of recipe we're updating and decode
             val updatedRecipe = Json.decodeFromString<Recipe>(call.receive())
-
+            updatedRecipe.updatedDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
             // Call update Call, if the recipe_id is not found it will return a 404 error
             val response = replaceRecipe(updatedRecipe)
             if (response != null) {

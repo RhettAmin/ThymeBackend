@@ -2,14 +2,12 @@ package ca.thymetodine.db
 
 import ca.thymetodine.models.Recipe
 import com.mongodb.client.model.Filters
-import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoCollection
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import io.ktor.server.application.*
-import io.realm.kotlin.internal.platform.runBlocking
 import kotlinx.coroutines.flow.toList
-import org.mongodb.kbson.ObjectId
+import kotlinx.coroutines.runBlocking
 
 
 fun Application.configureMongoConnection() {
