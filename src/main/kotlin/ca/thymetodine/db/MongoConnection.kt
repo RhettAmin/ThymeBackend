@@ -2,12 +2,14 @@ package ca.thymetodine.db
 
 import ca.thymetodine.models.Recipe
 import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Sorts
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoCollection
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import io.ktor.server.application.*
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import org.bson.conversions.Bson
 
 
 fun Application.configureMongoConnection() {
@@ -32,8 +34,11 @@ object MongoConnection {
      * Input:
      *      recipe_id - the recipe Id of the function
      */
-    fun getRecipes(recipe_id: String?): List<Recipe> {
-        var returnCollection: List<Recipe> = listOf()
+    fun getRecipes(recipe_id: String?, limit: String?): List<Recipe> {
+
+        println("$recipe_id -- $limit")
+
+        var returnCollection: List<Recipe>
         println(recipeCollection.codecRegistry)
         runBlocking {
             val filter = if (recipe_id != null) {
@@ -41,8 +46,10 @@ object MongoConnection {
             } else {
                 Filters.empty()
             }
-            println("filter: $filter")
-            val doc = recipeCollection.find(filter)
+            var doc = recipeCollection.find(filter).sort(Sorts.descending("updated_date"))
+            if (limit != null) {
+                doc = doc.limit(limit.toInt())
+            }
             returnCollection = doc.toList()
             println(returnCollection)
         }

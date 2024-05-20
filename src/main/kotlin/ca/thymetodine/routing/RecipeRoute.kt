@@ -19,8 +19,9 @@ import kotlinx.serialization.json.Json
 fun Route.recipeRouting() {
     route("/recipes") {
         get {
-            println("QueryParam: ${call.request.queryParameters["recipeId"]}")
-            val recipeList = getRecipes(call.request.queryParameters["recipeId"])
+
+            val recipeList = getRecipes(call.request.queryParameters["recipeId"], call.request.queryParameters["limit"])
+
             val statusCode = if (recipeList.isEmpty()) { HttpStatusCode.NotFound } else { HttpStatusCode.OK }
             call.respond(HttpStatusCode.OK, Response(null, recipeList, statusCode.value.toString()))
         }

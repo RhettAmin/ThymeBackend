@@ -18,4 +18,10 @@ class ApplicationTest {
             //assertEquals("Hello World!", bodyAsText())
         }
     }
+
+    @Test
+    fun funRandom() = testApplication {
+        val stringTest: String? = null
+        stringTest!!.toInt()
+    }
 }
