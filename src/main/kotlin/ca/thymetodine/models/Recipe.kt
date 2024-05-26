@@ -49,7 +49,7 @@ data class IngredientSection (
 data class Ingredient (
     val name: String,
     val quantity: Float,
-    val measurement: String?
+    val measurement: String
 )
 
 @Serializable
