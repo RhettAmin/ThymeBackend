@@ -37,3 +37,4 @@ out/
 
 ### Code ###
 /src/main/resources/*
+gradle.properties

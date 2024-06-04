@@ -101,6 +101,7 @@ object MongoConnection {
      *      recipe_id - the recipe we are adding
      */
     fun deleteRecipe(recipe_id: String) {
+        println(recipe_id)
         runBlocking {
             val filter = Filters.eq("recipe_id", recipe_id)
             recipeCollection.deleteOne(filter)

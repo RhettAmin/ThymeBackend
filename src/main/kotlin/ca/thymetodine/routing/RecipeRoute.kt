@@ -47,6 +47,7 @@ fun Route.recipeRouting() {
             // Grab Request Body of recipe we're updating and decode
             val updatedRecipe = Json.decodeFromString<Recipe>(call.receive())
             updatedRecipe.updatedDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
             // Call update Call, if the recipe_id is not found it will return a 404 error
             val response = replaceRecipe(updatedRecipe)
             if (response != null) {
@@ -59,8 +60,17 @@ fun Route.recipeRouting() {
             }
         }
         delete {
-            call.request.queryParameters["recipeId"]?.let { it1 -> deleteRecipe(it1) }
-            call.respond(Response("Recipe successfully deleted", null, HttpStatusCode.OK.value.toString()))
+            val id = call.request.queryParameters["recipe_id"]
+            println("id: $id")
+            if (id.isNullOrEmpty()) {
+                call.respond(Response("error", null, HttpStatusCode.BadRequest.toString()))
+            } else {
+                println("id: $id")
+                deleteRecipe(id)
+                call.respond(Response("Recipe successfully deleted", null, HttpStatusCode.OK.value.toString()))
+            }
+
+
         }
     }
 
