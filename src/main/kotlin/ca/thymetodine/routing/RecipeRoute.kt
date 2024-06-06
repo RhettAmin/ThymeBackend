@@ -45,14 +45,14 @@ fun Route.recipeRouting() {
                 This update will completely replace the old value
              */
             // Grab Request Body of recipe we're updating and decode
-            val updatedRecipe = Json.decodeFromString<Recipe>(call.receive())
-            updatedRecipe.updatedDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+            val recipeToUpdate = Json.decodeFromString<Recipe>(call.receive())
+            recipeToUpdate.updatedDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
 
             // Call update Call, if the recipe_id is not found it will return a 404 error
-            val response = replaceRecipe(updatedRecipe)
-            if (response != null) {
+            val updatedRecipe = replaceRecipe(recipeToUpdate)
+            if (updatedRecipe != null) {
                 call.respond(
-                    Response(response, null, HttpStatusCode.OK.value.toString()))
+                    Response(updatedRecipe, null, HttpStatusCode.OK.value.toString()))
             } else {
                 call.respond(
                     Response("Recipe Creation encountered an issue",
