@@ -12,6 +12,7 @@ data class Recipe(
     val recipeId: String,
     val name: String = "",
     val description: String = "",
+    val metadata: Metadata?,
     @SerialName("created_date")
     val createdDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
     @SerialName("updated_date")
@@ -27,6 +28,12 @@ data class Recipe(
     val instructionSection: List<InstructionSection> = Collections.emptyList(),
     @SerialName("nutrition_facts")
     val nutritionFacts: NutritionFacts
+)
+
+@Serializable
+data class Metadata (
+    @SerialName("main_image_alt_text")
+    val mainImageAltText: String
 )
 
 @Serializable
@@ -57,7 +64,14 @@ data class Ingredient (
 data class InstructionSection (
     @SerialName("section_name")
     val sectionName: String?,
+    val metadata: InstructionImageMetadata?,
     val steps: List<String>
+)
+
+@Serializable
+data class InstructionImageMetadata (
+    @SerialName("alt_text")
+    val altText: String
 )
 
 @Serializable
