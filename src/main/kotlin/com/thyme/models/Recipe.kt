@@ -1,4 +1,4 @@
-package ca.thymetodine.models
+package com.thyme.models
 
 import kotlinx.datetime.*
 import kotlinx.datetime.TimeZone
@@ -12,13 +12,17 @@ data class Recipe(
     val recipeId: String,
     val name: String = "",
     val description: String = "",
-    val metadata: Metadata?,
+    @SerialName("hero_image_link")
+    val heroImageLink: String = "",
+    @SerialName("main_image_link")
+    val mainImageLink: String = "",
+//    val metadata: Metadata?,
     @SerialName("created_date")
     val createdDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
     @SerialName("updated_date")
     var updatedDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
     val tags: List<String> = Collections.emptyList(),
-    val images: String,
+//    val images: String,
     @SerialName("ingredient_section")
     val ingredientSection: List<IngredientSection> = Collections.emptyList(),
     val serving: Serving,
@@ -42,7 +46,7 @@ data class Serving (
     val totalServings: Int,
     @SerialName("serving_size")
     val servingSize: Int,
-    val amount: String
+    val form: String
 )
 
 @Serializable
@@ -76,21 +80,21 @@ data class InstructionImageMetadata (
 
 @Serializable
 data class NutritionFacts (
-    val calories: Int,
-    val protein: Int,
-    val carbohydrate: Int,
-    val fat: Int,
+    val calories: Double,
+    val protein: Double,
+    val carbohydrate: Double,
+    val fat: Double,
     @SerialName("saturated_fat")
-    val saturatedFat: Int,
+    val saturatedFat: Double,
     @SerialName("trans_fat")
-    val transFat: Int,
-    val fibre: Int,
-    val sugars: Int,
-    val cholesterol: Int,
-    val sodium: Int,
+    val transFat: Double,
+    val fibre: Double,
+    val sugars: Double,
+    val cholesterol: Double,
+    val sodium: Double,
     @SerialName("vitamin_d")
-    val vitaminD: Int,
-    val iron: Int,
-    val potassium: Int,
-    val calcium: Int
+    val vitaminD: Double,
+    val iron: Double,
+    val potassium: Double,
+    val calcium: Double
 )

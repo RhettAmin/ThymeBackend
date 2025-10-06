@@ -1,4 +1,4 @@
-package ca.thymetodine.models
+package com.thyme.models
 
 import io.ktor.http.*
 import kotlinx.serialization.Serializable

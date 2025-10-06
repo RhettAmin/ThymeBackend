@@ -1,1 +1,1 @@
-rootProject.name = "ca.thymetodine.thymebackend"
+rootProject.name = "thymebackend"

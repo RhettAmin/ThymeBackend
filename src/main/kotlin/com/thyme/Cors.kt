@@ -1,4 +1,4 @@
-package ca.thymetodine.plugins
+package com.thyme
 
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -9,7 +9,7 @@ fun Application.configureCors() {
         anyHost()
         allowHost("10.0.0.10")
         allowHost("localhost:5173")
-        allowHost("localhost:8081")
+        allowHost("localhost:3000")
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.ContentLength)
         allowMethod(HttpMethod.Patch)

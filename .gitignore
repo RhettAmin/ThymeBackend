@@ -35,6 +35,5 @@ out/
 ### VS Code ###
 .vscode/
 
-### Code ###
-/src/main/resources/*
-gradle.properties
+### Yaml ###
+/src/main/resources/application.yaml

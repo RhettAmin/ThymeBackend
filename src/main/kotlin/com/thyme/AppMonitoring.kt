@@ -1,6 +1,6 @@
-package ca.thymetodine.plugins
+package com.thyme
 
-import ca.thymetodine.db.MongoConnection.closeConnection
+import com.thyme.db.MongoConnection.closeConnection
 import io.ktor.server.application.*
 import io.ktor.server.application.hooks.*
 

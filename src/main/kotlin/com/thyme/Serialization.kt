@@ -1,4 +1,4 @@
-package ca.thymetodine.plugins
+package com.thyme
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

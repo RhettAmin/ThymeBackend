@@ -1,4 +1,4 @@
-package ca.thymetodine.plugins
+package com.thyme
 
 import io.ktor.http.*
 import io.ktor.server.application.*

@@ -1,6 +1,6 @@
-package ca.thymetodine.db
+package com.thyme.db
 
-import ca.thymetodine.models.Recipe
+import com.thyme.models.Recipe
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Sorts
 import com.mongodb.kotlin.client.coroutine.MongoClient
@@ -13,15 +13,13 @@ import org.bson.conversions.Bson
 
 
 fun Application.configureMongoConnection() {
-    MongoConnection.uri = environment.config.property("mongo.uri").getString()
-    MongoConnection.mongoClient = MongoClient.create(MongoConnection.uri)
+    MongoConnection.mongoClient = MongoClient.create( environment.config.property("mongo.uri").getString())
     MongoConnection.foodDb = MongoConnection.mongoClient.getDatabase(environment.config.property("mongo.database").getString())
     MongoConnection.recipeCollection = MongoConnection.foodDb.getCollection(environment.config.property("mongo.collection").getString())
 }
 
 object MongoConnection {
 
-    lateinit var uri: String
     lateinit var mongoClient: MongoClient
     lateinit var foodDb: MongoDatabase
     lateinit var recipeCollection: MongoCollection<Recipe>
@@ -34,15 +32,15 @@ object MongoConnection {
      * Input:
      *      recipe_id - the recipe Id of the function
      */
-    fun getRecipes(recipe_id: String?, limit: String?): List<Recipe> {
+    fun getRecipes(recipeId: String?, limit: String?): List<Recipe> {
 
-        println("$recipe_id -- $limit")
+        println("getRecipes INPUT: $recipeId -- $limit")
 
         var returnCollection: List<Recipe>
         println(recipeCollection.codecRegistry)
         runBlocking {
-            val filter = if (recipe_id != null) {
-                Filters.eq("recipe_id", recipe_id)
+            val filter = if (recipeId != null) {
+                Filters.eq("recipe_id", recipeId)
             } else {
                 Filters.empty()
             }
@@ -54,6 +52,7 @@ object MongoConnection {
             println(returnCollection)
         }
 
+        println("getRecipes OUTPUT: $returnCollection")
         return returnCollection
     }
 
@@ -100,10 +99,10 @@ object MongoConnection {
      * Input:
      *      recipe_id - the recipe we are adding
      */
-    fun deleteRecipe(recipe_id: String) {
-        println(recipe_id)
+    fun deleteRecipe(recipeId: String) {
+        println("Deleting: $recipeId")
         runBlocking {
-            val filter = Filters.eq("recipe_id", recipe_id)
+            val filter = Filters.eq("recipe_id", recipeId)
             recipeCollection.deleteOne(filter)
         }
     }
