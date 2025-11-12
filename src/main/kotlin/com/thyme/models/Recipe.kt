@@ -1,7 +1,6 @@
 package com.thyme.models
 
 import kotlinx.datetime.*
-import kotlinx.datetime.TimeZone
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
@@ -16,22 +15,22 @@ data class Recipe(
     val heroImageLink: String = "",
     @SerialName("main_image_link")
     val mainImageLink: String = "",
-//    val metadata: Metadata?,
     @SerialName("created_date")
-    val createdDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+    val createdDate: String = LocalDate.toString(),
     @SerialName("updated_date")
-    var updatedDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+    var updatedDate: String = LocalDate.toString(),
     val tags: List<String> = Collections.emptyList(),
-//    val images: String,
     @SerialName("ingredient_section")
-    val ingredientSection: List<IngredientSection> = Collections.emptyList(),
+    val ingredientSections: List<IngredientSection> = Collections.emptyList(),
     val serving: Serving,
     @SerialName("time_to_plate")
     val timeToPlate: Int = 0,
     @SerialName("instruction_section")
-    val instructionSection: List<InstructionSection> = Collections.emptyList(),
+    val instructionSections: List<InstructionSection> = Collections.emptyList(),
     @SerialName("nutrition_facts")
-    val nutritionFacts: NutritionFacts
+    val nutritionFacts: NutritionFacts,
+    @SerialName("is_active")
+    val isActive: Boolean?
 )
 
 @Serializable
@@ -61,7 +60,8 @@ data class Ingredient (
     val name: String,
     val quantity: Float,
     val measurement: String,
-    val type: Int?
+    val type: Int?,
+    val nutrients: NutritionFacts?
 )
 
 @Serializable
@@ -69,6 +69,8 @@ data class InstructionSection (
     @SerialName("section_name")
     val sectionName: String?,
     val metadata: InstructionImageMetadata?,
+    @SerialName("image_link")
+    val imageLink: String?,
     val steps: List<String>
 )
 
@@ -81,15 +83,15 @@ data class InstructionImageMetadata (
 @Serializable
 data class NutritionFacts (
     val calories: Double,
-    val protein: Double,
-    val carbohydrate: Double,
     val fat: Double,
     @SerialName("saturated_fat")
     val saturatedFat: Double,
     @SerialName("trans_fat")
     val transFat: Double,
+    val carbohydrate: Double,
     val fibre: Double,
     val sugars: Double,
+    val protein: Double,
     val cholesterol: Double,
     val sodium: Double,
     @SerialName("vitamin_d")

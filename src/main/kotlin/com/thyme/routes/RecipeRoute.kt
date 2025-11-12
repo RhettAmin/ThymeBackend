@@ -10,10 +10,9 @@ import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
+import kotlinx.datetime.*
 import kotlinx.serialization.json.Json
+import java.time.format.DateTimeFormatter
 
 fun Route.recipeRouting() {
     route("/recipes") {
@@ -41,9 +40,12 @@ fun Route.recipeRouting() {
                 Assumption that for the update call the entire new request is provided with all changes
                 This update will completely replace the old value
              */
+            val request = call.receiveText()
+            println("REQUEST FOR PATCH: $request")
+
             // Grab Request Body of recipe we're updating and decode
-            val recipeToUpdate = Json.decodeFromString<Recipe>(call.receive())
-            recipeToUpdate.updatedDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+            val recipeToUpdate = Json.decodeFromString<Recipe>(request)
+            recipeToUpdate.updatedDate = LocalDate.toString()
 
             // Call update Call, if the recipe_id is not found it will return a 404 error
             val updatedRecipe = replaceRecipe(recipeToUpdate)

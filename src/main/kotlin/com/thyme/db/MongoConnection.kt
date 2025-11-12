@@ -49,7 +49,6 @@ object MongoConnection {
                 doc = doc.limit(limit.toInt())
             }
             returnCollection = doc.toList()
-            println(returnCollection)
         }
 
         println("getRecipes OUTPUT: $returnCollection")
